@@ -6,10 +6,7 @@ controllers that perform operations on specific collections.
 """
 
 from typing import Any
-from typing import Dict
 from typing import Generic
-from typing import List
-from typing import Type
 from typing import TypeVar
 
 from pydantic import BaseModel
@@ -38,7 +35,7 @@ class GenericController(Generic[T]):
 
     """
 
-    def __init__(self, collection: Collection, model: Type[T]):
+    def __init__(self, collection: Collection, model: type[T]):
         """Initializes the generic controller.
 
         Parameters:
@@ -49,7 +46,7 @@ class GenericController(Generic[T]):
         self.collection = collection
         self.model = model
 
-    def create(self, document_data: Dict[str, Any]) -> T:
+    def create(self, document_data: dict[str, Any]) -> T:
         """
         Creates a new document in the collection.
 
@@ -63,7 +60,7 @@ class GenericController(Generic[T]):
         self.collection.insert_one(document_data)
         return document
 
-    def read(self, query: Dict[str, Any]) -> List[T]:
+    def read(self, query: dict[str, Any]) -> list[T]:
         """
         Reads documents from the collection.
 
@@ -76,7 +73,7 @@ class GenericController(Generic[T]):
         documents = self.collection.find(query)
         return [self.model(**doc) for doc in documents]
 
-    def update(self, query: Dict[str, Any], update_data: Dict[str, Any]) -> bool:
+    def update(self, query: dict[str, Any], update_data: dict[str, Any]) -> bool:
         """
         Updates documents in the collection.
 
@@ -90,7 +87,7 @@ class GenericController(Generic[T]):
         result = self.collection.update_many(query, {"$set": update_data})
         return result.modified_count > 0
 
-    def delete(self, query: Dict[str, Any]) -> bool:
+    def delete(self, query: dict[str, Any]) -> bool:
         """
         Deletes documents from the collection.
 

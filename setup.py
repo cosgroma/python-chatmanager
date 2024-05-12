@@ -1,21 +1,20 @@
 #!/usr/bin/env python
-import os
 import re
-import sys
 from pathlib import Path
 
 from setuptools import find_packages
 from setuptools import setup
-from setuptools.dist import Distribution
+
+# from setuptools.dist import Distribution
 
 
-class BinaryDistribution(Distribution):
-    """
-    Distribution which almost always forces a binary package with platform name
-    """
+# class BinaryDistribution(Distribution):
+#     """
+#     Distribution which almost always forces a binary package with platform name
+#     """
 
-    def has_ext_modules(self):
-        return super().has_ext_modules() or not os.environ.get("SETUPPY_ALLOW_PURE")
+#     def has_ext_modules(self):
+#         return super().has_ext_modules() or not os.environ.get("SETUPPY_ALLOW_PURE")
 
 
 def read(*names, **kwargs):
@@ -31,11 +30,12 @@ def get_requirements(filename="requirements.txt"):
 
 setup(
     name="chatmanager",
-    use_scm_version={
-        "local_scheme": "dirty-tag",
-        "write_to": "src/chatmanager/_version.py",
-        "fallback_version": "0.0.0",
-    },
+    # use_scm_version={
+    #     "local_scheme": "dirty-tag",
+    #     "write_to": "src/chatmanager/_version.py",
+    #     "fallback_version": "0.0.0",
+    # },
+    version="0.0.0",
     license="LGPL-3.0-or-later",
     description="Manages conversations from large language models",
     long_description="{}\n{}".format(
@@ -90,13 +90,13 @@ setup(
     # but we can do it in setup.py.
     setup_requires=(
         [
-            "setuptools_scm>=3.3.1",
+            # "setuptools_scm>=3.3.1",
             # "cffi>=1.0.0",
         ]
-        if any(arg.startswith(("build", "bdist")) for arg in sys.argv)
-        else [
-            "setuptools_scm>=3.3.1",
-        ]
+        # if any(arg.startswith(("build", "bdist")) for arg in sys.argv)
+        # else [
+        #     "setuptools_scm>=3.3.1",
+        # ]
     ),
     entry_points={
         "console_scripts": [

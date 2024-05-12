@@ -23,6 +23,12 @@ def read(*names, **kwargs):
         return fh.read()
 
 
+def get_requirements(filename="requirements.txt"):
+    with Path.open(filename) as f:
+        requires = [line.replace("\n", "") for line in f.readlines()]
+    return requires
+
+
 setup(
     name="chatmanager",
     use_scm_version={
@@ -54,9 +60,6 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: Implementation :: CPython",
@@ -75,12 +78,8 @@ setup(
     keywords=[
         # eg: "keyword1", "keyword2", "keyword3",
     ],
-    python_requires=">=3.8",
-    install_requires=[
-        "click",
-        "cffi>=1.0.0",
-        # eg: "aspectlib==1.1.1", "six>=1.7",
-    ],
+    python_requires=">=3.11",
+    install_requires=get_requirements(),
     extras_require={
         # eg:
         #   "rst": ["docutils>=0.11"],
@@ -92,7 +91,7 @@ setup(
     setup_requires=(
         [
             "setuptools_scm>=3.3.1",
-            "cffi>=1.0.0",
+            # "cffi>=1.0.0",
         ]
         if any(arg.startswith(("build", "bdist")) for arg in sys.argv)
         else [
@@ -104,5 +103,5 @@ setup(
             "chatman = chatmanager.cli:run",
         ]
     },
-    cffi_modules=[f"{path}:ffi" for path in Path("src").glob("**/_*_build.py")],
+    # cffi_modules=[f"{path}:ffi" for path in Path("src").glob("**/_*_build.py")],
 )

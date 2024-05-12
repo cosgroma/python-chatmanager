@@ -23,4 +23,4 @@ import click
 @click.command()
 @click.argument("names", nargs=-1)
 def run(names):
-    click.echo(names)
+    click.echo("Hello, World!")
